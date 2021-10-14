@@ -3,7 +3,7 @@ USER root
 ENV XDG_DATA_HOME="/config" \
     XDG_CONFIG_HOME="/config"
 RUN apk --no-cache add curl icu-libs jq wget
-RUN apk --no-cache add libssl1.0 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/main
+RUN apk --no-cache add libressl-dev
 # Install packages
 RUN \
   mkdir -p \
