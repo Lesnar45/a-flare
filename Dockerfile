@@ -1,4 +1,5 @@
 FROM flaresolverr/flaresolverr
+USER root
 ENV XDG_DATA_HOME="/config" \
     XDG_CONFIG_HOME="/config"
 
