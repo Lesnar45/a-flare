@@ -2,15 +2,23 @@ FROM flaresolverr/flaresolverr
 USER root
 ENV XDG_DATA_HOME="/config" \
     XDG_CONFIG_HOME="/config"
-RUN apk --no-cache add curl
+RUN apk --no-cache add curl icu-libs jq wget libssl1.0
 # Install packages
 RUN \
-# Install jackett
-  mkdir -p /app/Jackett && \
-  jack_tag=$(curl -sX GET "https://api.github.com/repos/Jackett/Jackett/releases/latest" | awk '/tag_name/{print $4;exit}' FS='[""]') && \
-  curl -o /build/jacket.tar.gz -L https://github.com/Jackett/Jackett/releases/download/$jack_tag/Jackett.Binaries.Mono.tar.gz && \
-  tar zxf /build/jacket.tar.gz -C /app/Jackett --strip-components=1 && \
-
+  mkdir -p \
+	/app/Jackett && \
+ if [ -z ${JACKETT_RELEASE+x} ]; then \
+	JACKETT_RELEASE=$(curl -sX GET "https://api.github.com/repos/Jackett/Jackett/releases/latest" \
+	| jq -r .tag_name); \
+ fi && \
+ curl -o \
+ /tmp/jacket.tar.gz -L \
+	"https://github.com/Jackett/Jackett/releases/download/${JACKETT_RELEASE}/Jackett.Binaries.${JACKETT_ARCH}.tar.gz" && \
+ tar xf \
+ /tmp/jacket.tar.gz -C \
+	/app/Jackett --strip-components=1 && \
+ echo "**** fix for host id mapping error ****" && \
+ chown -R root:root /app/Jackett && \
 # cleanup
   rm -rf /build/*
 
