@@ -22,7 +22,7 @@ RUN apk add --update wget tar bzip2 curl-dev && apk add mono --update-cache --re
 RUN addgroup -S jackett && adduser -s /bin/false -h /usr/share/Jackett -G jackett -S jackett && mkdir -p /usr/share/Jackett && chown -R jackett: /usr/share/Jackett
 
 #Wget Jackett decompress then cleanup
-RUN wget --no-check-certificate -q https://github.com/Jackett/Jackett/releases/download/v0.7.181/Jackett.Binaries.Mono.tar.gz && tar -zxf Jackett.Binaries.Mono.tar.gz && rm -v /opt/Jackett.Binaries.Mono.tar.gz
+RUN wget --no-check-certificate -q https://github.com/Jackett/Jackett/releases/download/v0.18.992/Jackett.Binaries.Mono.tar.gz && tar -zxf Jackett.Binaries.Mono.tar.gz && rm -v /opt/Jackett.Binaries.Mono.tar.gz
 
 #Set the owner
 RUN chown -R jackett: /opt/Jackett
