@@ -1,8 +1,12 @@
 FROM flaresolverr/flaresolverr
+ARG BUILD_DATE
+ARG VERSION
+ARG JACKETT_RELEASE
+ARG JACKETT_ARCH="LinuxAMDx64"
 USER root
 ENV XDG_DATA_HOME="/config" \
     XDG_CONFIG_HOME="/config"
-RUN apk --no-cache add curl icu-libs jq wget
+RUN apk --no-cache add curl icu-libs jq wget tar
 RUN apk --no-cache add libressl-dev
 # Install packages
 RUN \
