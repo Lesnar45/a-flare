@@ -2,7 +2,7 @@ FROM flaresolverr/flaresolverr
 USER root
 ENV XDG_DATA_HOME="/config" \
     XDG_CONFIG_HOME="/config"
-
+RUN apk --no-cache add curl
 # Install packages
 RUN \
 # Install jackett
